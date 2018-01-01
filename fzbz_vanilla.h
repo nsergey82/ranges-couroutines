@@ -45,6 +45,18 @@ std::vector<unsigned> fizbuz_transform(unsigned limit) {
     return vec;
 }
 
+std::vector<unsigned> fizbuz_transform_slow(unsigned limit) {
+    std::vector<unsigned> vec;
+    vec.resize(limit-1);
+    for(unsigned i = 1; i < limit; ++i)
+        vec[i-1] = i;
+
+    std::transform(//std::execution::par, <-- will this balance the slow modulo?
+            vec.begin(), vec.end(), vec.begin(), [](unsigned i){
+                return helper::mark_divisibles<3>(helper::mark_divisibles<5>(helper::mark_divisibles<15>(i)));
+            });
+    return vec;
+}
 
 std::vector<unsigned> fizbuz(unsigned limit) {
     std::vector<unsigned> vec;
