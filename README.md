@@ -1,2 +1,2 @@
-# ranges-couroutines
-Comparing ranges-v3 and boost couroutines-v2
+# Unfair comparisons
+Comparing several ranges/streams libraries. 
