@@ -3,7 +3,7 @@
 #include "fzbz_rx.h"
 #include "fzbz_vanilla.h"
 
-#include "googlebenchmark/include/benchmark/benchmark.h"
+#include "benchmark/include/benchmark/benchmark.h"
 
 
 using std::cout;

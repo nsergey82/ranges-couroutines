@@ -7,8 +7,8 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(Boost COMPONENTS context coroutine system thread REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_subdirectory(googlebenchmark)
-include_directories(${googlebenchmark_SOURCE_DIR}/include ${googlebenchmark_BINARY_DIR})
+add_subdirectory(benchmark)
+include_directories(${benchmark_SOURCE_DIR}/include ${benchmark_BINARY_DIR})
 
 add_subdirectory(googletest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})

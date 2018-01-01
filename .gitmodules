@@ -1,0 +1,16 @@
+[submodule "range-v3"]
+	path = range-v3
+	url = https://github.com/ericniebler/range-v3.git
+	branch = master
+[submodule "RxCpp"]
+	path = RxCpp
+	url = https://github.com/Reactive-Extensions/RxCpp.git
+	branch = master
+[submodule "googletest"]
+	path = googletest
+	url = https://github.com/google/googletest
+	branch = master
+[submodule "benchmark"]
+	path = benchmark
+	url = https://github.com/google/benchmark.git
+	branch = master
