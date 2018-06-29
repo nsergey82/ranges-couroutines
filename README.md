@@ -5,7 +5,7 @@ But it can be quite hard to compose back the solutions in a not too cumbersome w
 We would like to build pipelines from small ad-hoc tasks. Unlike algorithms from STL such pipelines are meant to be lazily evaluated, making them perfect for stream processing and early terminating tasks. 
 
 
-### FizzBuzz (https://en.wikipedia.org/wiki/Fizz_buzz)  
+### Part I: FizzBuzz (https://en.wikipedia.org/wiki/Fizz_buzz)  
 For each given number we have to mark it correctly, depending on its divisibility. 
 Imagine we have a function that recognizes all cases of Fizz, and another two functions for Buzz and FizzBuzz respectively,
 additionally, we have a special function to convert numbers, Fizzes, Buzzes, and FizzBuzzes to strings. 
@@ -92,7 +92,7 @@ auto rng = rxcpp::observable<>::range(1, limit)
             .map(helper::mark_divisibles<3, int>);
 rng.subscribe([&vec](unsigned v){ vec.push_back(v);}, [](){});
 ```
-Here we subscribe a lambda with a vector bound to it be reference and `push_back` each value we get from the producer. 
+Here we subscribe a lambda with a vector bound to it by reference and `push_back` each value we get from the producer. 
 Note the difference between `push` and `pull` models. With ranges we are actively iterating to get the values.  
 With rx we subscribe to values. With the latter we could easily create two subscribers, with ranges it would only be possible if either (a) the iterators are Forward, not just Input or (b) we allow for additional space to store a copy of the values.
 
@@ -167,4 +167,27 @@ Yes, it is silly to use heavy artillery for trivial tasks. Coroutines and Rx are
 Furthermore, both coroutines and Rx library introduce special abilities that were not used here. 
 We will discuss those in the following section.
 
-To be continued...
+### Part II: Best/Worst records (https://www.hackerrank.com/challenges/breaking-best-and-worst-records/problem)
+
+In this case we need to emit a list of best/worst records for an incoming stream of scores. 
+![records](https://s3.amazonaws.com/hr-assets/0/1487360234-6bca5c518d-breakingbest3.png)
+
+Imagine, we want to build the following pipeline:
+```
+               ,--- best --- --- --- to_str
+              |                 
+ input --- tee                  
+              |
+               `--- negate --- best --- to_str_2
+```
+
+Here, `best` is a stateful predicate, that keeps the highest seen value. 
+It can be used for getting the worst value if we negate the given integers.
+Hence, we have to duplicate the input to both "branches". 
+Component `tee` is responsible for this. If we can't replay the input stream, 
+then we have no other choice, but to store a copy of stream values in it 
+(see, e.g., python's implementation of [tee](https://docs.python.org/2/library/itertools.html#itertools.tee)).
+But if it has the "multipass guarantee", like a ForwardIterator, we can simply produce two copies of the original input.
+
+
+ 
