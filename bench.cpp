@@ -3,6 +3,8 @@
 #include "fzbz_rx.h"
 #include "fzbz_vanilla.h"
 
+#include "count_record_breaking_crtn.h"
+
 #include "benchmark/include/benchmark/benchmark.h"
 
 
@@ -75,21 +77,32 @@ static void BM_rx_fizbz_s(benchmark::State &state) {
     }
 }
 
+static void BM_crtn_bg(benchmark::State &state) {
+    for(auto _ : state) {
+        crtn::count_good_bad(state.range(0));
+    }
+
+}
 
 const unsigned left = 1u<<13;
 const unsigned right = 1u<<20;
 
-BENCHMARK(BM_crtn_fizbz)->Range(left, right);
-BENCHMARK(BM_rng_fizbz)->Range(left, right);
-BENCHMARK(BM_brng_fizbz)->Range(left, right);
-BENCHMARK(BM_rx_fizbz)->Range(left, right);
-BENCHMARK(BM_vn_fizbz_transform)->Range(left, right);
-BENCHMARK(BM_vn_fizbz_mod)->Range(left, right);
-BENCHMARK(BM_vn_fizbz)->Range(left, right);
+#ifdef FIZZ
+    BENCHMARK(BM_crtn_fizbz)->Range(left, right);
+    BENCHMARK(BM_rng_fizbz)->Range(left, right);
+    BENCHMARK(BM_brng_fizbz)->Range(left, right);
+    BENCHMARK(BM_rx_fizbz)->Range(left, right);
+    BENCHMARK(BM_vn_fizbz_transform)->Range(left, right);
+    BENCHMARK(BM_vn_fizbz_mod)->Range(left, right);
+    BENCHMARK(BM_vn_fizbz)->Range(left, right);
 
-BENCHMARK(BM_crtn_fizbz_s)->Range(left, right);
-BENCHMARK(BM_rng_fizbz_s)->Range(left, right);
-BENCHMARK(BM_brng_fizbz_s)->Range(left, right);
-BENCHMARK(BM_rx_fizbz_s)->Range(left, right);
+    BENCHMARK(BM_crtn_fizbz_s)->Range(left, right);
+    BENCHMARK(BM_rng_fizbz_s)->Range(left, right);
+    BENCHMARK(BM_brng_fizbz_s)->Range(left, right);
+    BENCHMARK(BM_rx_fizbz_s)->Range(left, right);
+#endif
+
+BENCHMARK(BM_crtn_bg)->Range(left, right);
+
 
 BENCHMARK_MAIN();
