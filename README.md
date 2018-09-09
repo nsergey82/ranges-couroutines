@@ -1,4 +1,4 @@
-# Unthinkable Tinkering and Unfair Comparisons
+# Composability of basics blocks
 
 It is often desirable to decompose a problem into multiple smaller and simpler (ideally) problems.
 But it can be quite hard to compose back the solutions in a not too cumbersome way, while keeping the cost of abstraction as low as possible. 
