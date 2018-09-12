@@ -56,7 +56,7 @@ std::transform(//std::execution::par, in c++17
               });
 ```
 
-Consider other "procedural" implementations of FizzBuzz in [vanilla](fzbz_vanilla.h).
+Consider other "procedural" implementations of FizzBuzz in [vanilla](fizz_buzz/fzbz_vanilla.h).
 
 #### ranges-v3 (https://github.com/ericniebler/range-v3)
 The library is a *"basis for formal proposal to add range support to the C++ standard library"*. 
@@ -144,7 +144,7 @@ auto operator|(std::unique_ptr<Pull> source, C crtn) -> std::unique_ptr<pull_t<d
 This piping only works when the in-out types match. For other cases, e.g., converter of ints to strings, we use the `chain` function.
 
 #### Benchmarking
-![fz_nos_1](fz_nostr_1.png)
+![fz_nos_1](fizz_buzz/fz_nostr_1.png)
 
 We execute fizbuzz for different limits, using different methods. 
 `crtn` denotes Boost coroutines 2 implementation, `rx` is RxCpp, `brng` is Boost Ranges, 
@@ -153,14 +153,14 @@ In this execution the body of the work is extremely small -- not even string gen
 Thus, the overhead of coroutines and Rx is huge.   
 
 If we were to zoom in:  
-![fz_nos_2](fz_nostr_2.png)
+![fz_nos_2](fizz_buzz/fz_nostr_2.png)
 
 Boost ranges and ranges-v3 have fairly comparable performance. Vanilla with integer divisions is a bit more costly than the version with `std::transform` (which benefits from either better vector population, or from loop unrolling, need to check further).
 The procedural vanilla version with a lookup table and no integer division is the fastest.
 
 If we convert to strings as well we get the following chart:
 
-![fz_s](fz_str.png)   
+![fz_s](fizz_buzz/fz_str.png)   
 
 #### First summary
 Yes, it is silly to use heavy artillery for trivial tasks. Coroutines and Rx are meant to be used for e.g. async. I/O -- disk or network communication that take ages.

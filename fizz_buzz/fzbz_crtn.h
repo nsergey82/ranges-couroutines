@@ -2,7 +2,7 @@
 #define FZBZ_H
 
 #include <vector>
-#include "crtn_helpers.h"
+#include "../crtn_helpers.h"
 #include "fzbz_helpers.h"
 
 namespace crtn {
