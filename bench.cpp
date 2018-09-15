@@ -1,9 +1,11 @@
-#include "fzbz_crtn.h"
-#include "fzbz_rng.h"
-#include "fzbz_rx.h"
-#include "fzbz_vanilla.h"
+#include "fizz_buzz/fzbz_crtn.h"
+#include "fizz_buzz/fzbz_rng.h"
+#include "fizz_buzz/fzbz_rx.h"
+#include "fizz_buzz/fzbz_vanilla.h"
 
-#include "count_record_breaking_crtn.h"
+#include "count_record_breaking/count_record_breaking_crtn.h"
+#include "count_record_breaking/count_record_breaking_rx.h"
+#include "count_record_breaking/count_record_breaking_vanilla.h"
 
 #include "benchmark/include/benchmark/benchmark.h"
 
@@ -81,8 +83,15 @@ static void BM_crtn_bg(benchmark::State &state) {
     for(auto _ : state) {
         crtn::count_good_bad(state.range(0));
     }
-
 }
+
+static void BM_vn_bg(benchmark::State &state) {
+    for(auto _ : state) {
+        count_breaking_record_vanilla(state.range(0));
+    }
+}
+
+
 
 const unsigned left = 1u<<13;
 const unsigned right = 1u<<20;
@@ -102,6 +111,7 @@ const unsigned right = 1u<<20;
     BENCHMARK(BM_rx_fizbz_s)->Range(left, right);
 #endif
 
+BENCHMARK(BM_vn_bg)->Range(left, right);
 BENCHMARK(BM_crtn_bg)->Range(left, right);
 
 

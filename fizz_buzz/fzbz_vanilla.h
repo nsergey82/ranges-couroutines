@@ -2,10 +2,15 @@
 #define FZBZ_VN_H
 
 #include "fzbz_helpers.h"
+#include <vector>
 #include <algorithm>
 
 namespace vanilla {
 
+// all functions populate and return a vector with fizz-buzz marked numbers
+// from [1 .. limit)
+
+// this one uses the integer modulo and if/else chain
 std::vector<unsigned> fizbuz_mod(unsigned limit) {
     std::vector<unsigned> vec;
     vec.reserve(limit);
@@ -24,6 +29,7 @@ std::vector<unsigned> fizbuz_mod(unsigned limit) {
     return vec;
 }
 
+// this one uses a transform with modulo
 std::vector<unsigned> fizbuz_transform(unsigned limit) {
     std::vector<unsigned> vec;
     vec.resize(limit-1);
@@ -45,6 +51,7 @@ std::vector<unsigned> fizbuz_transform(unsigned limit) {
     return vec;
 }
 
+// this one uses transform and a composition of helpers
 std::vector<unsigned> fizbuz_transform_slow(unsigned limit) {
     std::vector<unsigned> vec;
     vec.resize(limit-1);
@@ -58,6 +65,7 @@ std::vector<unsigned> fizbuz_transform_slow(unsigned limit) {
     return vec;
 }
 
+// this one uses a lookup into a small table
 std::vector<unsigned> fizbuz(unsigned limit) {
     std::vector<unsigned> vec;
     vec.reserve(limit);
