@@ -5,6 +5,7 @@
 #include "../crtn_helpers.h"
 #include <deque>
 #include <vector>
+#include <iostream>
 
 
 namespace crtn {
@@ -60,9 +61,7 @@ void neg(push_t<int> &sink, pull_t<int> &source) {
 // 3 4 21 36 10 28 35 5 24 42 --> 4 0
 // 10 5 20 20 4 5 2 25 1 --> 2 4
 //
-int count_good_bad(unsigned n) {
-    const int low = 1;
-    const int high = 9999;
+unsigned count_breaking_record_crtn(unsigned n) {
     auto input_gen = rnd_values(n, low, high);
 
     std::vector<std::deque<int>> queues(2);

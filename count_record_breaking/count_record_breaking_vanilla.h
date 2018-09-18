@@ -2,26 +2,17 @@
 #define RANGES_COUNT_RECORD_BREAKING_VANILLA_H
 
 #include "count_helpers.h"
+#include <iostream>
 
-int count_breaking_record_vanilla(unsigned n) {
-    const int low = 1;
-    const int high = 9999;
+unsigned count_breaking_record_vanilla(unsigned n) {
     ScoresGen<int> gen(low, high);
-    auto least = high + 1;
-    auto best = low - 1;
-    unsigned bestcnt = 0;
-    unsigned leastcnt = 0;
+    RecordCounter<int> best(low-1);
+    RecordCounter<int> worst(-1*(high+1));
     for(unsigned i = 0; i < n; ++i) {
         auto v = gen();
-        if(v > best) {
-            ++bestcnt;
-            best = v;
-        }
-        else if(v < least) {
-            ++leastcnt;
-            least = v;
-        }
+        best.process(v);
+        worst.process(-1 * v);
     }
-    return leastcnt + bestcnt;
+    return best.get_count() + worst.get_count();
 }
 #endif //RANGES_COUNT_RECORD_BREAKING_VANILLA_H

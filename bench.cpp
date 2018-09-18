@@ -81,7 +81,7 @@ static void BM_rx_fizbz_s(benchmark::State &state) {
 
 static void BM_crtn_bg(benchmark::State &state) {
     for(auto _ : state) {
-        crtn::count_good_bad(state.range(0));
+        crtn::count_breaking_record_crtn(state.range(0));
     }
 }
 
@@ -91,7 +91,28 @@ static void BM_vn_bg(benchmark::State &state) {
     }
 }
 
+static void BM_rx_bg(benchmark::State &state) {
+    for(auto _ : state) {
+        rx::count_breaking_record_rx(state.range(0));
+    }
+}
 
+
+/*
+ *
+BM_vn_bg/8192          212177 ns     212160 ns       3301
+BM_vn_bg/32768         846872 ns     846886 ns        829
+BM_vn_bg/262144       6754488 ns    6754703 ns        104
+BM_vn_bg/1048576     26980602 ns   26982100 ns         26
+BM_crtn_bg/8192       1031067 ns    1031115 ns        680
+BM_crtn_bg/32768      3997456 ns    3997648 ns        174
+BM_crtn_bg/262144    32134414 ns   32135386 ns         22
+BM_crtn_bg/1048576  128451384 ns  128457513 ns          5
+BM_rx_bg/8192          524946 ns     524975 ns       1329
+BM_rx_bg/32768        2058859 ns    2058972 ns        340
+BM_rx_bg/262144      16416116 ns   16417020 ns         43
+BM_rx_bg/1048576     65487958 ns   65490170 ns         11
+ */
 
 const unsigned left = 1u<<13;
 const unsigned right = 1u<<20;
@@ -113,6 +134,7 @@ const unsigned right = 1u<<20;
 
 BENCHMARK(BM_vn_bg)->Range(left, right);
 BENCHMARK(BM_crtn_bg)->Range(left, right);
+BENCHMARK(BM_rx_bg)->Range(left, right);
 
 
 BENCHMARK_MAIN();

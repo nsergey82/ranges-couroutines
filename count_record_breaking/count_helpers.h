@@ -1,8 +1,12 @@
 #ifndef RANGES_COUNT_HELPERS_H
 #define RANGES_COUNT_HELPERS_H
 #include <random>
+#include <iostream>
 
-template<typename T>
+constexpr int low = 1;
+constexpr int high = 9999;
+
+template<typename T, bool shouldPrint=false>
 class ScoresGen {
     std::mt19937 mtgen;
     std::uniform_int_distribution<T> dis;
@@ -11,6 +15,11 @@ public:
     {}
 
     T operator()() {
+        if(shouldPrint) {
+            T v = dis(mtgen);
+            std::cout << v << std::endl;
+            return v;
+        }
         return dis(mtgen);
     }
 };
@@ -31,5 +40,7 @@ public:
         }
         return 0;
     }
+
+    unsigned long get_count() const { return count; }
 };
 #endif //RANGES_COUNT_HELPERS_H

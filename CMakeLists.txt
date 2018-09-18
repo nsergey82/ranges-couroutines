@@ -31,8 +31,8 @@ target_link_libraries(bench
           Boost::coroutine
           Boost::thread)
 
-# add_executable(utest ${SOURCE_FILES} utest.cpp)
-# target_link_libraries(utest ${Boost_LIBRARIES} gtest gtest_main )
+add_executable(utest utest.cpp)
+target_link_libraries(utest ${Boost_LIBRARIES} gtest gtest_main )
 
 add_executable(foo foo.cpp)
 target_link_libraries(foo
