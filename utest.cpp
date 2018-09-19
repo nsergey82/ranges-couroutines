@@ -8,6 +8,7 @@
 #include "count_record_breaking/count_record_breaking_vanilla.h"
 #include "count_record_breaking/count_record_breaking_crtn.h"
 #include "count_record_breaking/count_record_breaking_rx.h"
+#include "count_record_breaking/count_record_breaking_rng.h"
 
 TEST(RecordCounter, return_0_if_not_processed) {
     RecordCounter<int> best(11);
@@ -89,6 +90,10 @@ TEST(TestCount, compare_vanilla_with_rx) {
         EXPECT_EQ(rx::count_breaking_record_rx(i),
                   count_breaking_record_vanilla(i));
     }
+}
+
+TEST(T1, t) {
+    test(5);
 }
 
 //TEST(TestVanilla, Size_of_vector_eq_limit_minus_1)

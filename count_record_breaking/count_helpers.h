@@ -11,7 +11,7 @@ class ScoresGen {
     std::mt19937 mtgen;
     std::uniform_int_distribution<T> dis;
 public:
-    ScoresGen(T low, T high, unsigned seed = 1234) : mtgen(seed), dis(low, high)
+    ScoresGen(T low = 0, T high = 100, unsigned seed = 1234) : mtgen(seed), dis(low, high)
     {}
 
     T operator()() {

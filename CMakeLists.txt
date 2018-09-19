@@ -20,7 +20,7 @@ set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE BOOL "Disable Google Test in benchmar
 add_subdirectory(benchmark)
 include_directories(${benchmark_SOURCE_DIR}/include ${benchmark_BINARY_DIR})
 
-add_executable(bench bench.cpp count_record_breaking/count_helpers.h count_record_breaking/count_helpers.h count_record_breaking/count_record_breaking_vanilla.h)
+add_executable(bench bench.cpp count_record_breaking/count_helpers.h count_record_breaking/count_helpers.h count_record_breaking/count_record_breaking_vanilla.h count_record_breaking/count_record_breaking_rng.h)
 target_link_libraries(bench
         PUBLIC
           Boost::boost
@@ -33,13 +33,3 @@ target_link_libraries(bench
 
 add_executable(utest utest.cpp)
 target_link_libraries(utest ${Boost_LIBRARIES} gtest gtest_main )
-
-add_executable(foo foo.cpp)
-target_link_libraries(foo
-        PUBLIC
-            Boost::boost
-        PRIVATE
-            Boost::system
-            Boost::context
-            Boost::coroutine
-            Boost::thread)
