@@ -38,7 +38,7 @@ public:
             best = value;
             return count;
         }
-        return 0;
+        return 0u;
     }
 
     unsigned long get_count() const { return count; }

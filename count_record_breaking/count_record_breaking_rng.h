@@ -8,7 +8,7 @@
 struct GenRndRng : ranges::view_facade<GenRndRng> {
 private:
     friend struct ranges::range_access;
-    ScoresGen<int,true>* rgen;
+    ScoresGen<int>* rgen;
     int value;
 
     auto read()  const { return value;  }
@@ -17,23 +17,29 @@ private:
     void next() { value = (*rgen)(); }
     void prev() {}
 public:
-    GenRndRng(ScoresGen<int,true>* g = nullptr) : rgen(g), value((*rgen)()) {
+    GenRndRng(ScoresGen<int>* g = nullptr) : rgen(g), value((*rgen)()) {
     }
 };
 
-unsigned test(unsigned limit) {
+unsigned count_breaking_record_rng_seq(unsigned limit) {
     using namespace ranges;
-    ScoresGen<int,true> rgen(low, high);
+    ScoresGen<int> rgen(low, high);
 
     std::deque<int> q1;
     std::deque<int> q2;
     TeeStore<GenRndRng> teestore(GenRndRng(&rgen), q1, q2);
     TeeRng<GenRndRng> left(&teestore, 0);
     TeeRng<GenRndRng> right(&teestore, 1);
-    RANGES_FOR(auto v, left | view::take(limit-1)) {
-        std::cout << v << std::endl;
-   }
-   return 0;
+
+    RecordCounter<int> best(low-1);
+    auto best_trn = [&best](int v) { return best.process(v); };
+    RecordCounter<int> worst(-1 * (high+1));
+    auto worst_trn = [&worst](int v) { return worst.process(-1 * v); };
+
+    auto notzero = [](unsigned long v){ return v > 0; };
+
+    return ranges::count_if(right | view::take(limit) | view::transform(worst_trn), notzero) +
+           ranges::count_if(left  | view::take(limit) | view::transform(best_trn), notzero);
 }
 
 #endif //RANGES_RNG_H

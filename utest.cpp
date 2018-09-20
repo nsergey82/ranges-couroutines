@@ -92,8 +92,11 @@ TEST(TestCount, compare_vanilla_with_rx) {
     }
 }
 
-TEST(T1, t) {
-    test(5);
+TEST(TestCount, compare_vanilla_with_rng_seq) {
+    for(unsigned i = 10; i < 100; ++i) {
+        EXPECT_EQ(count_breaking_record_rng_seq(i),
+                  count_breaking_record_vanilla(i));
+    }
 }
 
 //TEST(TestVanilla, Size_of_vector_eq_limit_minus_1)
