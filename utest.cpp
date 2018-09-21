@@ -99,6 +99,13 @@ TEST(TestCount, compare_vanilla_with_rng_seq) {
     }
 }
 
+TEST(TestCount, compare_vanilla_with_rng_par) {
+    for(unsigned i = 10; i < 100; ++i) {
+        EXPECT_EQ(count_breaking_record_rng_par(i),
+                  count_breaking_record_vanilla(i));
+    }
+}
+
 //TEST(TestVanilla, Size_of_vector_eq_limit_minus_1)
 //{
 //    EXPECT_TRUE(vanilla::fizbuz(1).empty());
